@@ -68,21 +68,14 @@ class BowlingScorer {
 
         if(nextFrame.isStrike()) {
             def nextNextFrames = remainingBowlingFrames.tail()
-            if(nextNextFrames.empty) {
-                return nextFrame.firstRoll()
-            } else {
-                return nextFrame.firstRoll() + nextNextFrames.head().firstRoll()
-            }
+            return nextFrame.firstRoll() + nextNextFrames.head()?.firstRoll()?.or(0)
         } else {
             return nextFrame.firstRoll() + nextFrame.secondRoll()
         }
     }
 
     private static int totalBonusForSpare(List<BowlingFrame> remainingBowlingFrames) {
-        if(remainingBowlingFrames.empty) {
-            return 0
-        }
         def nextFrame = remainingBowlingFrames.head()
-        return nextFrame.firstRoll()
+        return nextFrame?.firstRoll()?.or(0)
     }
 }
